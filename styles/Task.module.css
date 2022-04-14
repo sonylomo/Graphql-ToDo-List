@@ -1,0 +1,23 @@
+.task {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  height: 2rem;
+  min-width: 40vw;
+  align-items: center;
+}
+
+.description {
+  text-align: start;
+  font-family: "Patrick Hand", cursive;
+  font-size: 1.1rem;
+}
+
+.strike {
+  text-decoration-line: "line-through";
+  text-decoration-style: "solid";
+}
+
+.task-btn {
+  height: 2rem;
+}
