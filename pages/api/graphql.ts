@@ -63,7 +63,7 @@ const server = createServer<{
 
       Query: {
         getAllTasks: async () => {
-          return prisma.task.findMany({
+          return await prisma.task.findMany({
             include: {
               tag: true
             }
@@ -71,7 +71,7 @@ const server = createServer<{
         },
 
         getAllTags: async () => {
-          return prisma.tag.findMany({
+          return await prisma.tag.findMany({
             include: {
               tasks: true
             }
@@ -79,7 +79,7 @@ const server = createServer<{
         },
 
         getTaskByID: async (_, args: { id: string }) => {
-          return prisma.task.findUnique({
+          return await prisma.task.findUnique({
             where: {
               id: args.id
             },
@@ -147,21 +147,7 @@ const server = createServer<{
             }
           })
           return deleteTask;
-        }
-
-        // updateTask : (parent: unknown, args: { description: string; tag: { id: string; name: string; } }) => {
-        //   const task = {
-        //     id: "5",
-        //     description: args.description,
-        //     complete: false,
-        //     tag: {
-        //       id: args.tag.id,
-        //       name: args.tag.name
-        //     }
-        //   };
-        //   tasks_data.push(task);
-        //   return task;
-        // }
+        },
       }
     }
   }

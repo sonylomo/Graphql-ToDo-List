@@ -1,5 +1,5 @@
 const TagLabel = ({ name }: { name: string }) => {
-  return <span>{name}</span>;
+  return <u>{name}</u>;
 };
 
 export default TagLabel;

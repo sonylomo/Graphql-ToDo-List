@@ -42,10 +42,11 @@
 }
 
 .tags{
-  margin: auto;
+  margin: 2rem auto;
   display: flex;
   justify-content: space-between;
-  width: 60%;
+  width: 50%;
+  font-style: oblique;
 }
 
 .footer {

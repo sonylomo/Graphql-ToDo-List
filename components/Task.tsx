@@ -68,6 +68,7 @@ const Task = ({ id, description, complete, tag }: taskProps) => {
     })
       .then((res) => {
         console.log("Just Deleted", res);
+        router.reload()
       })
       .catch(console.log);
   };
