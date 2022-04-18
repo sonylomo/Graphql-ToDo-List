@@ -6,17 +6,3 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-
-model Task {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
-  description String
-  complete    Boolean
-  tag         Tag     @relation(fields: [tagId], references: [id])
-  tagId       String  @db.ObjectId 
-}
-
-model Tag {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  name  String @unique
-  tasks Task[]
-}

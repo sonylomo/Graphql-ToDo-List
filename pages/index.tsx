@@ -1,76 +1,50 @@
-import { gql, request } from "graphql-request";
 import type { NextPage } from "next";
+import { ChangeEvent, FormEvent, SetStateAction, useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
-import {
-  useEffect,
-  useState
-} from "react";
-import TagLabel from "../components/Tag";
-import Task from "../components/Task";
 import styles from "../styles/Home.module.css";
-
-const AllTasksTags = gql`
-  query AllTasksTags {
-    getAllTags {
-      id
-      name
-    }
-    getAllTasks {
-      id
-      description
-      complete
-      tag {
-        id
-        name
-      }
-    }
-  }
-`;
-
-const AddTask = gql`
-  mutation AddTask($newDescription: String!, $newTagName: String!) {
-    addTask(description: $newDescription, tagName: $newTagName) {
-      id
-      description
-      complete
-      tag {
-        id
-        name
-      }
-    }
-  }
-`;
+import Image from "next/image";
+import Task from "../components/Task";
+import { taskProps } from "../utils/types";
+import data from "../utils/task.json";
 
 const Home: NextPage = () => {
-  const [tasks, setTasks] = useState([]);
-  const [allTags, setAllTags] = useState([]);
-  const [newTag, setNewTag] = useState("");
-  const [newDescription, setNewDescription] = useState("");
+  // fetch("http://localhost:3000/api/hello")
+  //   .then((res) => {
+  //     res.json();
+  //   })
+  //   .then((data) => console.log("Fetched things: ", data));
 
-  useEffect(() => {
-    request("/api/graphql", AllTasksTags).then((res) => {
-      setTasks(res.getAllTasks);
-      setAllTags(res.getAllTags);
-      console.log("first query", res.getAllTags);
-    });
-  }, []);
+  const [Tasks, setTasks] = useState(data);
 
-  const addTask = () => {
-    request({
-      url: "/api/graphql",
-      document: AddTask,
-      variables: {
-        newDescription: newDescription,
-        newTagName: newTag,
-      },
-    })
-      .then((res) => {
-        console.log("Added task", res);
-      })
-      .catch(console.log);
+  const [CategorySearch, setCategorySearch] = useState<string[]>([]);
+  const [searchItem, setsearchItem] = useState("");
+  const [filteredResults, setFilteredResults] = useState<string[]>([]);
+
+  const getCategories = () => {
+    let categories: string[] = [];
+    Tasks.map(({ category }) => categories.push(category.toLowerCase()));
+    setCategorySearch(categories);
   };
 
+  const searchCategory = (value: string) => {
+    getCategories();
+
+    setsearchItem(value);
+    if (searchItem !== "") {
+      const filteredData = CategorySearch.filter((item) => {
+        return Object.values(item).includes(searchItem.toLowerCase());
+      });
+
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(CategorySearch);
+    }
+  };
+
+  const addTask = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    console.log("input2", filteredResults);
+  };
 
   return (
     <div className={styles.container}>
@@ -89,51 +63,46 @@ const Home: NextPage = () => {
         <section className={styles.section}>
           <form onSubmit={addTask}>
             <input
-              required
               type="text"
               className={styles.input1}
               placeholder="What do you have in mind today? 👀"
-              onChange={(e) => setNewDescription(e.target.value)}
+
             />
             <input
-              required
               type="text"
+              id="category"
               className={styles.input2}
-              onChange={(e) => setNewTag(e.target.value)}
-              placeholder="Add tag"
-              title="Type in a tag"
+              onChange={(e) => searchCategory(e.target.value)}
+              placeholder="Add category"
+              title="Type in a category"
             />
-            {/* disable btn until tag is available */}
+            
             <button type="submit" className={styles["add-task"]}>
               ✔
             </button>
             {/* <select
-              // onChange={(e) => searchTags(e.target.value)}
-              placeholder="Add tag"
+              // onChange={(e) => searchCategory(e.target.value)}
+              placeholder="Add category"
               style={{width: "30%", height:"2rem"}}
             >
-                              <option value="not found"></option>
-
+              {searchItem.length > 1 && filteredResults.length > 1 ? (
+                filteredResults.map((category) => {
+                  return <option value={category}> </option>;
+                })
+              ) : (
+                <option value="not found"></option>
+              )}
+              <option />
             </select> */}
           </form>
-          <article className={styles.tags}>
-            {allTags.map(({ id, name }) => (
-              <TagLabel key={id} name={name} />
-            ))}
-          </article>
-          {tasks.length > 0 ? (
-            tasks.map(({ id, description, complete, tag }) => (
-              <Task
-                key={id}
-                id={id}
-                description={description}
-                complete={complete}
-                tag={tag}
-              />
-            ))
-          ) : (
-            <p>Add a new task!!</p>
-          )}
+          {Tasks.map(({ id, description, status, category }) => (
+            <Task
+              id={id}
+              description={description}
+              status={status}
+              category={category}
+            />
+          ))}
         </section>
       </main>
       <footer className={styles.footer}>
@@ -141,7 +110,7 @@ const Home: NextPage = () => {
           href="https://www.flaticon.com/free-icons/description"
           title="description icons"
         >
-          Image created by Freepik & Eucalyp - Flaticon
+          Image created by Freepik - Flaticon
         </a>
       </footer>
     </div>
