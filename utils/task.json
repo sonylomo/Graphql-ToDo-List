@@ -2,29 +2,46 @@
   {
     "id": "1",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    "status": false,
-    "category": "work"
+    "complete": true,
+    "tag": {
+      "id": "20",
+      "name": "work"
+    }
   },
   {
     "id": "2",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    "status": false,
-    "category": "school"
+    "complete": false,
+    "tag": {
+      "id": "10",
+      "name": "school"
+    }
   },
   {
     "id": "3",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    "status": false,
-    "category": "home"
-  },{
+    "complete": false,
+    "tag": {
+      "id": "30",
+      "name": "home"
+    }
+  },
+  {
     "id": "4",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    "status": true,
-    "category": "work"
-  },{
+    "complete": true,
+    "tag": {
+      "id": "20",
+      "name": "work"
+    }
+  },
+  {
     "id": "5",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    "status": false,
-    "category": "school"
+    "complete": false,
+    "tag": {
+      "id": "10",
+      "name": "school"
+    }
   }
 ]

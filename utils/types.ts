@@ -1,9 +1,22 @@
 type taskProps = {
+    [x: string]: any;
     id: string;
     description: string;
-    status: boolean;
-    category: string;
+    complete: boolean;
+    tag?: tagProps
+    // size: Sizes.;
 };
 
+type tagProps = {
+    [x: string]: any;
+    id: string;
+    name: string;
+}
 
-export type { taskProps }
+export enum Sizes {
+    xs = "extra-small",
+    sm = "small"
+}
+
+
+export type { taskProps, tagProps }
