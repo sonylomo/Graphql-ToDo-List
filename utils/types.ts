@@ -4,7 +4,6 @@ type taskProps = {
     description: string;
     complete: boolean;
     tag?: tagProps
-    // size: Sizes.;
 };
 
 type tagProps = {
@@ -12,11 +11,5 @@ type tagProps = {
     id: string;
     name: string;
 }
-
-export enum Sizes {
-    xs = "extra-small",
-    sm = "small"
-}
-
 
 export type { taskProps, tagProps }

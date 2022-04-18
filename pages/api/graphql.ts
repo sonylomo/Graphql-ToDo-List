@@ -78,7 +78,7 @@ const server = createServer<{
           })
         },
 
-        getTaskByID: async (_, args: { id: string }) => {
+        getTaskByID: async (parent: unknown, args: { id: string }) => {
           return await prisma.task.findUnique({
             where: {
               id: args.id
