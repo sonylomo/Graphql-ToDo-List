@@ -11,13 +11,15 @@
   text-align: start;
   font-family: "Patrick Hand", cursive;
   font-size: 1.1rem;
+  color: rgb(64, 64, 64);
 }
 
 .strike {
-  text-decoration-line: "line-through";
-  text-decoration-style: "solid";
+  text-decoration: line-through;
+  color: grey;
 }
 
 .task-btn {
   height: 2rem;
+  width: 2rem;
 }

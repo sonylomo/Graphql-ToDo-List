@@ -41,6 +41,14 @@
   margin: 2% auto;
 }
 
+.tags{
+  margin: 2rem auto;
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  font-style: oblique;
+}
+
 .footer {
   display: flex;
   flex: 1;
