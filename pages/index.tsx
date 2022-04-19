@@ -1,4 +1,3 @@
-import request, { gql } from "graphql-request";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -6,66 +5,21 @@ import { useEffect, useState } from "react";
 import TagLabel from "../components/Tag";
 import Task from "../components/Task";
 import styles from "../styles/Home.module.css";
-
-const AllTasksTags = gql`
-  query AllTasksTags {
-    getAllTags {
-      id
-      name
-    }
-    getAllTasks {
-      id
-      description
-      complete
-      tag {
-        id
-        name
-      }
-    }
-  }
-`;
-
-const AddTask = gql`
-  mutation AddTask($newDescription: String!, $newTagName: String!) {
-    addTask(description: $newDescription, tagName: $newTagName) {
-      id
-      description
-      complete
-      tag {
-        id
-        name
-      }
-    }
-  }
-`;
+import tasks_data from "../utils/tasks.json"
+import tags_data from "../utils/tags.json"
 
 const Home: NextPage = () => {
-  const [tasks, setTasks] = useState([]);
-  const [allTags, setAllTags] = useState([]);
+  //this section changes soon
+  const [tasks, setTasks] = useState(tasks_data);
+  const [allTags, setAllTags] = useState(tags_data);
+  //this section changes soon
+
   const [newTag, setNewTag] = useState("");
   const [newDescription, setNewDescription] = useState("");
 
-  useEffect(() => {
-    request("/api/graphql", AllTasksTags).then((res) => {
-      setTasks(res.getAllTasks);
-      setAllTags(res.getAllTags);
-      console.log("first query", res.getAllTags);
-    });
-  }, []);
 
   const addTask = () => {
-    request({
-      url: "/api/graphql",
-      document: AddTask,
-      variables: {
-        newDescription: newDescription,
-        newTagName: newTag,
-      },
-    })
-      .then((res) => {
-        console.log("Added task", res);
-      })
-      .catch(console.log);
+    // we'll fix this later 🛠 
   };
 
   return (

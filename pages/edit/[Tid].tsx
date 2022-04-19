@@ -1,87 +1,19 @@
-import request, { gql } from "graphql-request";
 import { useEffect, useState } from "react";
 import styles from "../../styles/EditTask.module.css";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
-const GetTaskByID = gql`
-query GetTaskByID($taskId: String!) {
-  getTaskByID(id: $taskId) {
-    id
-    description
-    complete
-    tag {
-      id
-      name
-    }
-  }
-}
-`;
-
-const UpdateTask = gql`
-  mutation UpdateTask(
-    $taskId: String!
-    $taskDescription: String
-    $tagName: String!
-  ) {
-    updateTask(
-      id: $taskId
-      description: $taskDescription
-      tagName: $tagName
-    ) {
-      id
-      description
-      complete
-      tag {
-        id
-        name
-      }
-    }
-  }
-`;
-
 const EditTask = () => {
-  const router = useRouter();
-  const { Tid } = router.query;
   const [queryTask, setQueryTask] = useState<any>({});
   const [editDescription, setEditDescription] = useState("");
   const [editTag, setEditTag] = useState("");
 
-  useEffect(() => {
-    request({
-      url: "/api/graphql",
-      document: GetTaskByID,
-      variables: { taskId: Tid },
-    })
-      .then((res) => {
-        setQueryTask(res.getTaskByID);
-        console.log("TAskIDDDDDDDDDDDD", Tid);
-      })
-      .catch(console.log);
-  }, [Tid]);
-
   const handleEdit = () => {
-    request({
-      url: "/api/graphql",
-      document: UpdateTask,
-      variables: {
-        taskId: Tid,
-        taskDescription:
-          editDescription === "" ? queryTask.description : editDescription,
-        tagName: editTag === "" ? queryTask.tag.name : editTag,
-      },
-    })
-      .then((res) => {
-        console.log("handled Edit", res);
-        router.push("/");
-      })
-      .catch(console.log);
+    //under maintenance ⚙
   };
 
   const handleCancel = () => {
-    setEditDescription("");
-    setEditTag("");
-    router.push("/");
+    //under maintenance ⚙
   };
 
   return (
@@ -112,16 +44,10 @@ const EditTask = () => {
           />
         </div>
         <div className={styles.EditFormBtn}>
-          <button
-            type="button"
-            onClick={() => handleEdit()}
-          >
+          <button type="button" onClick={() => handleEdit()}>
             💾 Save
           </button>
-          <button
-            type="button"
-            onClick={() => handleCancel()}
-          >
+          <button type="button" onClick={() => handleCancel()}>
             ❌ Cancel
           </button>
         </div>
